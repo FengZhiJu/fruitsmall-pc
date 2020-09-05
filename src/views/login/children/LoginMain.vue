@@ -1,20 +1,39 @@
 <!--  -->
 <template>
   <div class="login-main">
-    <div class="main">
+    <div class="main" @keydown.enter="login">
       <h4>账号登录</h4>
       <div class="input">
-        <el-input v-model.trim="username" placeholder="用户名" class="item"></el-input>
-        <el-input type='password' v-model.trim="password" placeholder="密码" class="item"></el-input>
-        <el-input v-model.trim="code" placeholder="验证码" class="item"></el-input>
-        <button class="signup" @click='toSignup'>注册账号</button>
+        <el-input
+          v-model.trim="username"
+          placeholder="用户名"
+          class="item"
+        ></el-input>
+        <el-input
+          type="password"
+          v-model.trim="password"
+          placeholder="密码"
+          class="item"
+        ></el-input>
+        <el-input
+          v-model.trim="code"
+          placeholder="验证码"
+          class="item"
+        ></el-input>
+        <button class="signup" @click="toSignup">注册账号</button>
       </div>
-      <verify-code class="verify-code" @codeText="codeText" ref="imgCode"></verify-code>
+      <verify-code
+        class="verify-code"
+        @codeText="codeText"
+        ref="imgCode"
+      ></verify-code>
       <p class="hint" v-if="isVerify == 1">用户名或密码错误</p>
       <p class="hint" v-if="isVerify == 2">请输入账号</p>
       <p class="hint" v-if="isVerify == 3">请输入密码</p>
       <p class="hint" v-if="isVerify == 4">验证码错误</p>
-      <button @click="login" class="login">登录</button>
+      <button @click="login" class="login">
+        登录
+      </button>
     </div>
   </div>
 </template>
@@ -25,7 +44,7 @@ import VerifyCode from "components/code/VerifyCode";
 
 export default {
   components: {
-    VerifyCode
+    VerifyCode,
   },
   data() {
     return {
@@ -33,7 +52,7 @@ export default {
       password: "",
       code: "",
       correctCode: "",
-      isVerify: false
+      isVerify: false,
     };
   },
   methods: {
@@ -47,7 +66,7 @@ export default {
         this.isVerify = 4;
         this.$refs.imgCode.codeImg();
       } else {
-        sendLogin(this.username, this.password).then(res => {
+        sendLogin(this.username, this.password).then((res) => {
           if (res.isLogin) {
             this.$store.commit("setLogin", res);
             this.$router.push("/home");
@@ -60,10 +79,10 @@ export default {
     codeText(text) {
       this.correctCode = text;
     },
-    toSignup(){
-      this.$router.push('/signup')
-    }
-  }
+    toSignup() {
+      this.$router.push("/signup");
+    },
+  },
 };
 </script>
 <style scoped>
@@ -79,7 +98,7 @@ export default {
   right: 300px;
   top: 20%;
   width: 400px;
-  height: 47%;
+  height: 378px;
   background-color: #fff;
   text-align: center;
 }
@@ -110,7 +129,7 @@ button:hover {
   text-align: left;
   color: var(--font);
   font-size: 14px;
-  transform: translate(10%, -54%);  
+  transform: translate(10%, -54%);
 }
 
 .err-border {

@@ -8,9 +8,15 @@
         @mouseover="showCurrentNav(index, item)"
         @mouseout="hideNavView"
       >
-        {{item}}
+        {{ item }}
         <i class="el-icon-arrow-right"></i>
-        <div class="messgae-hint" v-if="index == 3" :style="{ opacity: hint }">目前只有这些水果哦</div>
+        <div
+          class="messgae-hint"
+          v-if="index == 3 && isShow"
+          :style="{ opacity: hint }"
+        >
+          目前只有这些水果哦
+        </div>
       </li>
     </ul>
     <transition name="el-zoom-in-center">
@@ -28,16 +34,17 @@
 <script>
 import HomeNavView from "./HomeNavView";
 export default {
-  name: 'home-nav',
+  name: "home-nav",
   components: {
-    HomeNavView
+    HomeNavView,
   },
   data() {
     return {
       currentIndex: -1,
       currentCategory: "",
       timer: -1,
-      hint: 0
+      hint: 0,
+      isShow: true,
     };
   },
   props: {
@@ -45,17 +52,17 @@ export default {
       type: Object,
       default() {
         return {};
-      }
-    }
+      },
+    },
   },
   computed: {
     navKey() {
       return Object.keys(this.categoryFruits);
     },
     category() {
-        if (this.currentCategory == "") return [];
-        return this.categoryFruits[this.currentCategory];
-    }
+      if (this.currentCategory == "") return [];
+      return this.categoryFruits[this.currentCategory];
+    },
   },
   methods: {
     showCurrentNav(index, item) {
@@ -76,11 +83,14 @@ export default {
     keepView() {
       this.$refs.navView.$el.style.opacity = 1;
       window.clearTimeout(this.timer);
-    }
+    },
   },
   mounted() {
-    setTimeout(() => this.hint = 1, 500)
-    setTimeout(() => this.hint = 0, 4500)
+    setTimeout(() => (this.hint = 1), 500);
+    setTimeout(() => {
+      this.hint = 0;
+      setTimeout(() => (this.isShow = false), 600);
+    }, 4500);
   },
 };
 </script>
@@ -127,8 +137,8 @@ ul li:hover {
   padding: 30px;
   color: #333;
   text-align: center;
-  background: url('~assets/imgs/message.png') no-repeat;
+  background: url("~assets/imgs/message.png") no-repeat;
   background-size: 100%;
-  transition: all .6s;
+  transition: all 0.6s;
 }
 </style>
