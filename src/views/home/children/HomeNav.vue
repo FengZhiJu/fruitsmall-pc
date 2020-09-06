@@ -10,13 +10,6 @@
       >
         {{ item }}
         <i class="el-icon-arrow-right"></i>
-        <div
-          class="messgae-hint"
-          v-if="index == 3 && isShow"
-          :style="{ opacity: hint }"
-        >
-          目前只有这些水果哦
-        </div>
       </li>
     </ul>
     <transition name="el-zoom-in-center">
@@ -43,8 +36,6 @@ export default {
       currentIndex: -1,
       currentCategory: "",
       timer: -1,
-      hint: 0,
-      isShow: true,
     };
   },
   props: {
@@ -85,13 +76,6 @@ export default {
       window.clearTimeout(this.timer);
     },
   },
-  mounted() {
-    setTimeout(() => (this.hint = 1), 500);
-    setTimeout(() => {
-      this.hint = 0;
-      setTimeout(() => (this.isShow = false), 600);
-    }, 4500);
-  },
 };
 </script>
 <style scoped>
@@ -126,19 +110,5 @@ ul li i {
 ul li:hover {
   cursor: pointer;
   color: var(--font);
-}
-.messgae-hint {
-  box-sizing: border-box;
-  position: absolute;
-  top: -80px;
-  right: -80px;
-  width: 150px;
-  height: 150px;
-  padding: 30px;
-  color: #333;
-  text-align: center;
-  background: url("~assets/imgs/message.png") no-repeat;
-  background-size: 100%;
-  transition: all 0.6s;
 }
 </style>
